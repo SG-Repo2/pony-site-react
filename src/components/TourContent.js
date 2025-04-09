@@ -28,7 +28,8 @@ function TourContent() {
               <td>{show.venue}</td>
               <td>
                 {/* Add onClick handler if tickets link is dynamic */}
-                <button className="buy-button">Buy Tickets</button>
+                {/* Added specific class 'tour-buy-button' */}
+                <button className="tour-buy-button">Buy Tickets</button>
               </td>
             </tr>
           ))}

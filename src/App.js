@@ -36,15 +36,17 @@ function App() {
   const tvBackgroundColor = channelColors[currentChannel] || channelColors['tv-static'];
 
   return (
-    // Using a Fragment <> to avoid adding an extra div to the DOM
-    <>
+    // Wrap the entire app content with the centering wrapper
+    <div className="app-wrapper">
       <div className="tv-outer-case">
-        <TvContainer
-          currentChannel={currentChannel}
-          backgroundColor={tvBackgroundColor}
-        />
-        {/* Add this inside your TV container */}
-        <Y2KEffects />
+        <div className="tv-and-effects">
+          <TvContainer
+            currentChannel={currentChannel}
+            backgroundColor={tvBackgroundColor}
+          />
+          {/* Add this inside your TV container */}
+          <Y2KEffects />
+        </div>
         <Navigation changeChannel={changeChannel} />
       </div>
 
@@ -58,9 +60,9 @@ function App() {
       >
         <img src="https://cur.cursors-4u.net/cursor.png" border="0" alt="Robot Unicorn" />
       </a>
-      {/* Add right before the closing Fragment */}
+      {/* Add right before the closing tv-outer-case div */}
       <div className={`channel-transition ${isChangingChannel ? 'active' : ''}`}></div>
-    </>
+    </div>
   );
 }
 

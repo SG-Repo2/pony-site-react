@@ -46,7 +46,18 @@ body, html {
     height: 100%;
     font-family: Arial, sans-serif;
     background-color: #FFA1F5 ;
-    overflow: hidden;
+    /* overflow: hidden; Removed to allow potential centering adjustments */
+}
+
+/* New wrapper for centering the entire app */
+.app-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Ensure it takes full viewport height */
+    width: 100vw;
+    padding: 20px; /* Add some padding */
+    box-sizing: border-box;
 }
 
 /* Add custom cursor */
@@ -55,23 +66,28 @@ body {
 }
 
 
+/* Update TV container to be smaller */
 .tv-container {
     position: relative;
     overflow: hidden;
-    width: 85vw;
-    height: 80vh;
-    margin: 5vh auto;
+    width: 70vw;           /* Increased width slightly */
+    height: 75vh;          /* Increased height significantly */
+    margin: 0;             /* Remove margin as centering is handled by wrapper */
     border-top-left-radius: 6vw;
     border-bottom-left-radius: 6vw;
     border-top-right-radius: 6vw;
     border-bottom-right-radius: 6vw;
-    padding-left: 5%;
-    padding-right: 5%;
-    background-color: #FFB0D0;
+    padding-left: 5%;      /* Reverted padding */
+    padding-right: 5%;     /* Reverted padding */
+    /* New gradient background for smoother transition */
+    background: linear-gradient(180deg, #FFB0D0 0%, #FF80C0 100%);
     border: 25px solid #7a58e0;
-    box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.5);
+    /* Add a 3D shadow for a beveled look */
+    box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.3);
     box-sizing: border-box;
     transform: perspective(1000px) rotateX(2deg);
+    overflow: hidden; /* Added to contain potential inner shadows */
+    position: relative; /* Added for positioning context if needed */
 }
 
 /* Add TV scan lines effect */
@@ -93,15 +109,26 @@ body {
     pointer-events: none;
 }
 
-/* Add TV outer case styling */
+/* Update TV outer case to use flexbox layout */
 .tv-outer-case {
     position: relative;
-    width: 92vw;
-    margin: 0 auto;
+    width: 95vw; /* Increased width */
+    min-height: 80vh; /* Increased height using min-height */
+    margin: 0; /* Remove margin as centering is handled by wrapper */
     padding-bottom: 20px;
     background: linear-gradient(to bottom, #b39ddb, #7a58e0, #512da8);
     border-radius: 10vw;
     box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
+    display: flex;         /* Add flexbox */
+    align-items: center;   /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+    gap: 3vw;              /* Add spacing between screen and controls */
+}
+
+/* Add a new container for the TV and effects */
+.tv-and-effects {
+    position: relative;
+    width: fit-content;
 }
 
 /* Common content styles */
@@ -226,12 +253,24 @@ body {
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    padding: 10px;
+    padding: 15px; /* Increased padding */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Add a subtle border */
 }
 
-#tour-content th, #tour-content td {
-    border: none;
-    padding: 1.5vh 1.5vw;
+/* Add table header styling */
+#tour-content th {
+    background-color: rgba(0, 0, 0, 0.2); /* Darker background for header */
+    color: #ffffff; /* White text for header */
+    font-size: 1.5vw;
+    padding: 1.8vh 1.5vw;
+    text-transform: uppercase; /* Uppercase header text */
+    letter-spacing: 0.1em;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.4); /* Stronger bottom border for header */
+}
+
+#tour-content td {
+    border: none; /* Keep internal cell borders clean */
+    padding: 1.8vh 1.5vw; /* Increased padding */
     text-align: center;
     vertical-align: middle;
     font-size: 1.4vw;
@@ -244,11 +283,41 @@ body {
 
 #tour-content tr {
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 #tour-content tr:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.15); /* Slightly more opaque hover */
+    transform: scale(1.01); /* Slight scale on hover */
+}
+
+/* Style for the Buy Tickets button */
+.tour-buy-button {
+    background-color: #9dd250; /* Theme color */
+    color: #512da8; /* Dark purple text */
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 1.1vw;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.tour-buy-button:hover {
+    background-color: #b3e072; /* Lighter green on hover */
+    color: #ffffff; /* White text on hover */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    transform: translateY(-2px);
+}
+
+.tour-buy-button:active {
+    background-color: #8cc63f; /* Darker green on active */
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+    transform: translateY(1px);
 }
 
 /* Merch content styling */
@@ -367,10 +436,11 @@ body {
     pointer-events: none;
 }
 
+/* Update the buttons positioning */
 .buttons {
-    position: absolute;
-    top: 20%;
-    right: -60px;
+    position: relative;    /* Changed from absolute */
+    top: auto;             /* Reset top positioning */
+    right: auto;           /* Reset right positioning */
     z-index: 5;
     display: flex;
     flex-direction: column;
@@ -412,8 +482,11 @@ body {
     border-radius: 50%;
     border: none;
     cursor: pointer;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
-    transition: transform 0.2s, box-shadow 0.2s;
+    /* Beveled 3D effect with an inset shadow plus a subtle glow */
+    box-shadow:
+        inset 0px 2px 4px rgba(0,0,0,0.4),   /* inner shadow for depth */
+        0px 4px 8px rgba(255,255,255,0.2);     /* outer glow/shadow */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .bottom-buttons {
@@ -432,16 +505,23 @@ body {
     border-radius: 50%;
     border: none;
     cursor: pointer;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
-    transition: transform 0.2s, box-shadow 0.2s;
+    /* Beveled 3D effect with an inset shadow plus a subtle glow */
+    box-shadow:
+        inset 0px 2px 4px rgba(0,0,0,0.4),   /* inner shadow for depth */
+        0px 4px 8px rgba(255,255,255,0.2);     /* outer glow/shadow */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     margin-right: 1vw;
 }
 
-/* Button hover effects */
+/* Button hover/focus effects */
 .music-button:hover, .merch-button:hover,
-.tour-button:hover, .contact-button:hover, .power-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+.tour-button:hover, .contact-button:hover, .power-button:hover,
+.music-button:focus, .merch-button:focus,
+.tour-button:focus, .contact-button:focus, .power-button:focus {
+    transform: scale(1.05); /* Slightly enlarge on hover/focus */
+    box-shadow:
+        inset 0px 2px 4px rgba(0,0,0,0.5),   /* Increased inner shadow for emphasis */
+        0px 6px 12px rgba(255,255,255,0.3);    /* Enhanced glow */
 }
 
 /* Button active effects */
@@ -604,16 +684,22 @@ body {
   }
 }
 
-/* Responsive styles */
+/* Update media queries for responsive design */
 @media (max-width: 1200px) {
-  .tv-container {
-    width: 90vw;
-    height: 75vh;
-  }
+    .tv-container {
+        width: 60vw;        /* Reduced from 90vw */
+        height: 55vh;       /* Reduced from 75vh */
+    }
 
-  .buttons {
-    right: -50px;
-  }
+    .tv-outer-case {
+        flex-direction: column; /* Stack vertically on smaller screens */
+        gap: 2vh;
+    }
+
+    .buttons {
+        flex-direction: row;    /* Arrange buttons horizontally on smaller screens */
+        margin-bottom: 2vh;
+    }
 
   #music-content h1, #tour-content h1, #merch-content h1 {
     font-size: 7vw;
@@ -625,11 +711,11 @@ body {
 }
 
 @media (max-width: 900px) {
-  .tv-container {
-    width: 95vw;
-    height: 70vh;
-    border-width: 15px;
-  }
+    .tv-container {
+        width: 75vw;       /* Adjusted from 95vw */
+        height: 50vh;      /* Reduced from 70vh */
+        border-width: 15px;
+    }
 
   .music-button, .merch-button {
     width: 80px;
@@ -641,18 +727,23 @@ body {
     height: 60px;
   }
 
-  .buttons {
-    right: -40px;
-    transform: scale(0.8);
-  }
+    .buttons {
+        transform: scale(0.8);
+    }
 
   #tour-content table {
     width: 90%;
   }
 
   #tour-content th, #tour-content td {
-    padding: 1vh 0.8vw;
-    font-size: 2vw;
+    padding: 1.2vh 1vw; /* Adjusted padding */
+    font-size: 2.2vw; /* Slightly larger font */
+  }
+
+  /* Adjust button font size for smaller screens */
+  .tour-buy-button {
+    font-size: 1.8vw;
+    padding: 6px 12px;
   }
 
   .button-label {
@@ -665,30 +756,29 @@ body {
 }
 
 @media (max-width: 600px) {
-  .tv-outer-case {
-    width: 98vw;
-  }
+    .tv-outer-case {
+        width: 98vw;
+        flex-direction: column;
+    }
 
-  .tv-container {
-    width: 100%;
-    height: 60vh;
-    border-width: 10px;
-    border-radius: 15px;
-    margin: 3vh auto;
-  }
+    .tv-container {
+        width: 85vw;       /* Adjusted from 100% */
+        height: 45vh;      /* Reduced from 60vh */
+        border-width: 10px;
+        border-radius: 15px;
+        margin: 3vh auto;
+    }
 
-  .buttons {
-    position: relative;
-    top: auto;
-    right: auto;
-    margin: 20px auto;
-    transform: scale(0.7);
-  }
+    .buttons {
+        /* position, top, right are inherited or set correctly */
+        margin: 20px auto;
+        transform: scale(0.7);
+    }
 
-  .top-buttons, .bottom-buttons {
-    flex-direction: row;
-    gap: 10px;
-  }
+    .top-buttons, .bottom-buttons {
+        flex-direction: row;
+        gap: 10px;
+    }
 
   .music-button, .merch-button {
     width: 60px;
@@ -713,7 +803,13 @@ body {
   }
 
   #tour-content td, #tour-content th {
-    font-size: 3vw;
+    font-size: 3.5vw; /* Larger font for smallest screens */
+    padding: 1vh 0.8vw;
+  }
+
+  .tour-buy-button {
+    font-size: 2.8vw;
+    padding: 5px 10px;
   }
 
   .product-name {
